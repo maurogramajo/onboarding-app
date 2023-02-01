@@ -1,10 +1,105 @@
+import { useState, useContext } from 'react';
+
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+
+import {
+  login,
+  validateEmailAndCode,
+} from './libs/users';
+
+import Input from './components/Input';
+import Button from './components/Button';
+import Text from './components/Text';
+import Toast from './components/Toast';
 
 export default function App() {
+  const [email, setEmail] = useState('');
+  const [code, setCode] = useState('');
+  const [sendCode, setSendCode] = useState(false);
+  const [showError, setShowError] = useState('');
+  //const context = useContext(AuthContext);
+
+  async function onLogin() {
+    try {
+      if (code.trim() === '') {
+        return setShowError('Inserte el código enviado por E-Mail');
+      }
+      const logged = await validateEmailAndCode(email, code);
+      console.info('logged: ', logged);
+      //context.setToken(logged.jwt);
+      return navigation.navigate('Home');
+    } catch (err) {
+      console.info('Error login: ', err);
+      return setShowError('E-Mail o código no válidos');
+    }
+  }
+
+  async function onSendCode() {
+    try {
+      if (email.trim() === '') {
+        return setShowError('Inserte su email para continuar');
+      }
+      await login(email);
+      return setSendCode(!sendCode);
+    } catch (err) {
+      console.error('Error login: ', err);
+      return null;
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      
+      <View style={styles.formData}>
+        <View style={styles.formDataFields}>
+          { !sendCode && (
+            <>
+              <Input
+                label="E-Mail"
+                value={email}
+                onChange={setEmail}
+                keyboardType="email-address"
+                placeholder="algo@gmail.com"
+              />
+              <Button
+                title="Enviar código"
+                onPress={() => onSendCode()}
+                backgroundColor="#ffcc00"
+                textColor="#000000"
+                bold
+              />
+            </>
+          )}
+
+          { sendCode && (
+            <>
+              <Input
+                label="Inserte Código recibido"
+                value={code}
+                onChange={setCode}
+                placeholder="FG778A"
+              />
+              <Button
+                title="Ingresar"
+                onPress={() => onLogin()}
+                backgroundColor="#ffcc00"
+                textColor="#000000"
+                bold
+              />
+            </>
+          )}
+        </View>
+        { sendCode && (
+          <Text
+            onPress={() => onSendCode()}
+            linkLine
+          >
+            Reenviar Código
+          </Text>
+        )}
+      </View>      
+      {showError !== '' && (<Toast type="normal" onClose={() => setShowError('')}>{showError}</Toast>)}
       <StatusBar style="auto" />
     </View>
   );
@@ -13,7 +108,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#0B1626',
     alignItems: 'center',
     justifyContent: 'center',
   },
