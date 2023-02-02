@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import * as SplashScreen from 'expo-splash-screen';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
@@ -8,6 +8,7 @@ import AppProviderContext from './providers/AuthProvider';
 import { storeData } from './StorageData';
 
 import Routes from './components/AppRoutes';
+import Loading from './components/Loading';
 
 SplashScreen.preventAutoHideAsync()
   .catch(console.warn); // it's good to explicitly catch and inspect any error
@@ -35,15 +36,18 @@ export default function App() {
     prepare();
   }, []);
 
-  if (!appIsReady) {
-    return null;
+
+  if (appIsReady) {
+    return (
+      <AppProviderContext>
+        <ActionSheetProvider>
+          <Routes />
+        </ActionSheetProvider>
+      </AppProviderContext>
+    );
   }
 
   return (
-    <AppProviderContext>
-      <ActionSheetProvider>
-        <Routes />
-      </ActionSheetProvider>
-    </AppProviderContext>
+    <Loading />
   );
 }

@@ -17,16 +17,18 @@ function ButtonComponent({
   title,
   isEnable = true,
   backgroundColor = '#ffcc00',
-  textColor = '#FCFCFC',
+  textColor = '#000000',
   width = '100%',
   fontSize = 16,
   paddingVertical = 10,
   marginTop = 0,
   bold,
+  bottom,
+  position,
 }) {
   return (
     <TouchableOpacity
-      style={{ width, marginTop }}
+      style={{ width, marginTop, bottom, position }}
       onPress={() => onPress()}
       onPressIn={() => onPressIn()}
       onPressOut={() => onPressOut()}
