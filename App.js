@@ -1,115 +1,49 @@
-import { useState, useContext } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
-import {
-  login,
-  validateEmailAndCode,
-} from './libs/users';
+import AppProviderContext from './providers/AuthProvider';
 
-import Input from './components/Input';
-import Button from './components/Button';
-import Text from './components/Text';
-import Toast from './components/Toast';
+import { storeData } from './StorageData';
+
+import Routes from './components/AppRoutes';
+
+SplashScreen.preventAutoHideAsync()
+  .catch(console.warn); // it's good to explicitly catch and inspect any error
 
 export default function App() {
-  const [email, setEmail] = useState('');
-  const [code, setCode] = useState('');
-  const [sendCode, setSendCode] = useState(false);
-  const [showError, setShowError] = useState('');
-  //const context = useContext(AuthContext);
+  const [appIsReady, setAppIsReady] = useState(false);
 
-  async function onLogin() {
-    try {
-      if (code.trim() === '') {
-        return setShowError('Inserte el código enviado por E-Mail');
+  useEffect(() => {
+    async function prepare() {
+      try {
+        // Pre-load fonts, make any API calls you need to do here
+        await storeData('init', 'initStatus');
+        // Artificially delay for two seconds to simulate a slow loading
+        // experience. Please remove this if you copy and paste the code!
+        // await new Promise(resolve => setTimeout(resolve, 1000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        // Tell the application to render
+        setAppIsReady(true);
+        await SplashScreen.hideAsync();
       }
-      const logged = await validateEmailAndCode(email, code);
-      console.info('logged: ', logged);
-      //context.setToken(logged.jwt);
-      return navigation.navigate('Home');
-    } catch (err) {
-      console.info('Error login: ', err);
-      return setShowError('E-Mail o código no válidos');
     }
-  }
+    
+    prepare();
+  }, []);
 
-  async function onSendCode() {
-    try {
-      if (email.trim() === '') {
-        return setShowError('Inserte su email para continuar');
-      }
-      await login(email);
-      return setSendCode(!sendCode);
-    } catch (err) {
-      console.error('Error login: ', err);
-      return null;
-    }
+  if (!appIsReady) {
+    return null;
   }
 
   return (
-    <View style={styles.container}>
-      
-      <View style={styles.formData}>
-        <View style={styles.formDataFields}>
-          { !sendCode && (
-            <>
-              <Input
-                label="E-Mail"
-                value={email}
-                onChange={setEmail}
-                keyboardType="email-address"
-                placeholder="algo@gmail.com"
-              />
-              <Button
-                title="Enviar código"
-                onPress={() => onSendCode()}
-                backgroundColor="#ffcc00"
-                textColor="#000000"
-                bold
-              />
-            </>
-          )}
-
-          { sendCode && (
-            <>
-              <Input
-                label="Inserte Código recibido"
-                value={code}
-                onChange={setCode}
-                placeholder="FG778A"
-              />
-              <Button
-                title="Ingresar"
-                onPress={() => onLogin()}
-                backgroundColor="#ffcc00"
-                textColor="#000000"
-                bold
-              />
-            </>
-          )}
-        </View>
-        { sendCode && (
-          <Text
-            onPress={() => onSendCode()}
-            linkLine
-          >
-            Reenviar Código
-          </Text>
-        )}
-      </View>      
-      {showError !== '' && (<Toast type="normal" onClose={() => setShowError('')}>{showError}</Toast>)}
-      <StatusBar style="auto" />
-    </View>
+    <AppProviderContext>
+      <ActionSheetProvider>
+        <Routes />
+      </ActionSheetProvider>
+    </AppProviderContext>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#0B1626',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

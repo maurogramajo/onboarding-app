@@ -22,7 +22,7 @@ function ToastComponent({
   function hideToast() {
     Animated.timing(fadeAnim, {
       toValue: 0,
-      duration: 1000,
+      duration: 500,
       useNativeDriver: true,
     }).start();
     onClose();
@@ -30,12 +30,12 @@ function ToastComponent({
   useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 1500,
+      duration: 500,
       useNativeDriver: true,
     }).start();
     setTimeout(() => {
       hideToast();
-    }, 10000);
+    }, 5000);
   }, []);
 
   const styles = {
@@ -45,7 +45,9 @@ function ToastComponent({
     bottom: 20,
     backgroundColor: '#ff0000CC',
     paddingVertical: 8,
+    paddingHorizontal: 8,
     borderWidth: 1,
+    borderRadius: 10,
     borderColor: '#cc0000',
     shadowColor: '#000',
     shadowOffset: {
@@ -54,12 +56,11 @@ function ToastComponent({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
     alignSelf: 'center',
   };
 
   if (type === 'normal') {
-    styles.backgroundColor = '#3495ebCC';
+    styles.backgroundColor = '#ffffff10';
     styles.borderColor = '#3446eb';
   }
   return (
@@ -72,9 +73,16 @@ function ToastComponent({
           width: '100%',
         }}
       >
-        <AntDesign name="close" size={24} color="white" />
+        <AntDesign
+          name="close"
+          size={24}
+          color="white"
+          style={{
+            alignSelf: 'auto'
+          }}
+        />
       </Pressable>
-      <Text>{children}</Text>
+      <Text textAlign='center'>{children}</Text>
     </Animated.View>
   );
 }
