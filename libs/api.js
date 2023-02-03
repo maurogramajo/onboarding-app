@@ -27,6 +27,7 @@ export default async function api(params) {
   };
 
   if (localtoken) finalHeaders.Authorization = `bearer: ${localtoken.jwt}`;
+  
   if (params.headers) {
     Object.keys(params.headers).forEach((k) => {
       (finalHeaders[k] = params.headers[k]);

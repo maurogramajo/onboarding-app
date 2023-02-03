@@ -32,7 +32,6 @@ function LoginScreen() {
         return setShowError('Inserte el código enviado por E-Mail');
       }
       const logged = await validateEmailAndCode(email, code);
-      console.info('logged: ', logged);
       context.setToken(logged.jwt);
       return navigation.navigate('Home');
     } catch (err) {

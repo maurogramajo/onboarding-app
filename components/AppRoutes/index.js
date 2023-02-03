@@ -33,7 +33,6 @@ function AppRoutes() {
     logged,
   } = context;
 
-  console.info('CURRENT APP DATA: ', context.logged);
   useEffect(() => {
     if (logged) {
       navigation.navigate('Home');

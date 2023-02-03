@@ -1,27 +1,23 @@
 import React, {
   useContext,
-  useRef,
   useState,
   useEffect,
 } from 'react';
 
 import AuthContext from '../../providers/AuthContext';
+import { getUserProfilePhoto } from '../../helpers/images';
 
-import { View } from 'react-native';
-import Text from '../../components/Text';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+
+import { View, Image } from 'react-native';
+import Pressable from '../../components/Pressable';
 import Menu from '../../components/Menu';
+import EditableText from './components/EditableText';
 
 import styles from './styles';
 
 function HomeScreen() {
   const context = useContext(AuthContext);
-  let actionSheet = useRef();
-  var optionArray = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Cancel'];
-
-  const showActionSheet = () => {
-    //To show the Bottom ActionSheet
-    actionSheet.current.show();
-  };
 
   const {
     userData,
@@ -31,8 +27,31 @@ function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.userFrame}>
+        <View style={styles.pictureFrame}>
+          <Image
+            style={styles.profilePhoto}
+            source={getUserProfilePhoto(userData.profilePhoto)}
+          />
+          <Pressable
+            style={styles.editableProfilePhoto}
+            onPress={() => {}}
+          >
+            <MaterialCommunityIcons name="image-edit" size={40} color="white" />
+          </Pressable>
+        </View>
+        <View style={styles.infoFrame}>
+          <EditableText
+            label="Nombre"
+            value={!(userData.firstName)? 'NoName' : userData.firstName}
+          />
+          <EditableText
+            label="Apellido"
+            value={!(userData.lastName)? 'NoLastName' : userData.lastName}
+          />
+        </View>
+      </View>
       <Menu />
-      <Text textAlign='center'>Home Screen</Text>
     </View>
   );
 }

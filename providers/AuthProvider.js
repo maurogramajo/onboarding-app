@@ -75,7 +75,6 @@ function AppProviderContext({ children }) {
           _id: decoded.uuid,
           displayName: `${decoded.firstName || 'NoName'} ${decoded.lastName || 'NoLast'}`,
         });
-        console.info('USER DATA: ', decoded);
       }
       await storeData('end', 'initStatus');
     } catch (err) {
