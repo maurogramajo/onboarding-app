@@ -4,10 +4,10 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#0B1626',
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center',    
+    position: 'absolute',
   },
 });
 

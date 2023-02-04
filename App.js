@@ -36,7 +36,6 @@ export default function App() {
     prepare();
   }, []);
 
-
   if (appIsReady) {
     return (
       <AppProviderContext>

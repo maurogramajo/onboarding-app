@@ -26,8 +26,12 @@ function EditableText({
 
   const handleUpdate = () => {
     setEditable(false);
-    console.info('UPDATE', localValue);
     setValue(localValue);
+  }
+
+  const handleLeftUpdate = () => {
+    setLocalValue(value);
+    setEditable(false);
   }
 
   return(
@@ -48,6 +52,7 @@ function EditableText({
           width: '40%',
           fontSize,
         }}
+        onSubmitEditing={handleUpdate}
       />
       <Pressable
         onPress={!(editable) ? handleEdit : handleUpdate}

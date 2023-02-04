@@ -33,7 +33,7 @@ function LoginScreen() {
       }
       const logged = await validateEmailAndCode(email, code);
       context.setToken(logged.jwt);
-      return navigation.navigate('Home');
+      return navigation.navigate('Home', {});
     } catch (err) {
       console.info('Error login: ', err);
       return setShowError('E-Mail o código no válidos');

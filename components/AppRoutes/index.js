@@ -31,11 +31,12 @@ function AppRoutes() {
   const context = useContext(AuthContext);
   const {
     logged,
+    userData,
   } = context;
 
   useEffect(() => {
     if (logged) {
-      navigation.navigate('Home');
+      return navigation.navigate('Home', {});
     } else {
       navigation.navigate('Login');
     }
