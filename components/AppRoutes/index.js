@@ -11,6 +11,7 @@ import AuthContext from '../../providers/AuthContext';
 
 import LoginScreen from '../../screens/Login';
 import HomeScreen from '../../screens/Home';
+import LoadingScreen from '../../screens/Loading';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,10 @@ export const routesDefinition = [
     name: 'Home',
     component: HomeScreen,
   },
+  {
+    name: 'Loading',
+    component: LoadingScreen,
+  },
 ];
 
 function AppRoutes() {
@@ -31,19 +36,18 @@ function AppRoutes() {
   const context = useContext(AuthContext);
   const {
     logged,
-    userData,
   } = context;
 
   useEffect(() => {
     if (logged) {
-      return navigation.navigate('Home', {});
+      navigation.navigate('Loading');
     } else {
       navigation.navigate('Login');
     }
   }, [logged, /* isFocused */]);
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
       {routesDefinition.map((route) => (
         <Stack.Screen
           name={route.name}

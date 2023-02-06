@@ -14,6 +14,7 @@ import { getUserProfilePhoto } from '../../helpers/images';
 import { uploadFile } from '../../libs/api';
 import { updateUser, getUserData } from '../../libs/users';
 
+import Text from '../../components/Text';
 import Pressable from '../../components/Pressable';
 import Menu from '../../components/Menu';
 import Loading from '../../components/Loading';
@@ -31,8 +32,8 @@ function HomeScreen({ route }) {
     setUserData,
   } = context;
 
-  //const _id = undefined;
-  const { _id } = route.params;
+  const _id = undefined;
+  // const { _id } = route.params;
 
   async function fetchUserInfo() {
     try {
@@ -106,6 +107,10 @@ function HomeScreen({ route }) {
   return (
     <View style={styles.container}>
       <View style={styles.userFrame}>
+        <Text
+          fontSize={30}
+          bold
+        >Perfil de Usuario</Text>
         <View style={styles.pictureFrame}>
           <Image
             style={styles.profilePhoto}

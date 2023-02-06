@@ -7,8 +7,8 @@ import AppProviderContext from './providers/AuthProvider';
 
 import { storeData } from './StorageData';
 
-import Routes from './components/AppRoutes';
 import Loading from './components/Loading';
+import Routes from './components/AppRoutes';
 
 SplashScreen.preventAutoHideAsync()
   .catch(console.warn); // it's good to explicitly catch and inspect any error
@@ -35,6 +35,12 @@ export default function App() {
     
     prepare();
   }, []);
+
+  if(!appIsReady) {
+    return (
+      <Loading />
+    );
+  }
 
   if (appIsReady) {
     return (
