@@ -3,6 +3,9 @@ import { useNavigation } from '@react-navigation/native';
 // Using the provided hook
 import { useActionSheet } from '@expo/react-native-action-sheet';
 
+import { useTranslation } from 'react-i18next';
+import i18next from '../../utils/i18n';
+
 import AuthContext from '../../providers/AuthContext';
 
 import Button from '../Button';
@@ -11,6 +14,8 @@ export default function Menu() {
   const { showActionSheetWithOptions } = useActionSheet();
   const context = useContext(AuthContext);
   const navigation = useNavigation();
+
+  const { t } = useTranslation();
 
   const {
     logout,
@@ -22,7 +27,7 @@ export default function Menu() {
   };
 
   const onPress = () => {
-    const options = ['Logout', 'Cancel'];
+    const options = [`${i18next.t('menu.logout')}`, `${i18next.t('menu.cancel')}`];
     const destructiveButtonIndex = 0;
     const cancelButtonIndex = 1;
 
@@ -42,6 +47,6 @@ export default function Menu() {
   }
 
   return (
-    <Button title="Menu" onPress={onPress} bold bottom={0} position="absolute"/>
+    <Button title={i18next.t('menu.title')} onPress={onPress} bold bottom={0} position="absolute"/>
   )
 };

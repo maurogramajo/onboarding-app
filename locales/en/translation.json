@@ -5,6 +5,18 @@
     "lastname" : "Last name"
   },
   "login": {
-    
+    "emailplaceholder": "something@gmail.com",
+    "emptyemail": "Enter your email to continue",
+    "emptycode": "Insert the code sent by E-Mail",
+    "sendcode": "Send code",
+    "sendnewcode": "Send new code",
+    "insertcode": "Insert received code",
+    "login": "Log in",
+    "loginfail": "Invalid email or code"
+  },
+  "menu": {
+    "title": "Menu",
+    "cancel": "Cancel",
+    "logout": "Log out"
   }
 }

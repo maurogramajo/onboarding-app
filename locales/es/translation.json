@@ -5,6 +5,18 @@
     "lastname": "Apellido"
   },
   "login": {
-    
+    "emailplaceholder": "algo@gmail.com",
+    "emptyemail": "Ingrese su E-mail para continuar",
+    "emptycode": "Ingrese el código recibido por E-mail",
+    "sendcode": "Enviar código",
+    "sendnewcode": "Reenviar código",
+    "insertcode": "Ingrese el código recibido",
+    "login": "Ingresar",
+    "loginfail": "E-Mail o código no válidos"
+  },
+  "menu": {
+    "title": "Menú",
+    "cancel": "Cancelar",
+    "logout": "Cerrar Sesión"
   }
 }

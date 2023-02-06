@@ -4,6 +4,9 @@ import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { View } from 'react-native';
 
+import { useTranslation } from 'react-i18next';
+import i18next from '../../utils/i18n';
+
 import {
   login,
   validateEmailAndCode,
@@ -26,24 +29,26 @@ function LoginScreen() {
   const [showError, setShowError] = useState('');
   const context = useContext(AuthContext);
 
+  const { t } = useTranslation();
+
   async function onLogin() {
     try {
       if (code.trim() === '') {
-        return setShowError('Inserte el código enviado por E-Mail');
+        return setShowError(`${i18next.t('login.emptycode')}`);
       }
       const logged = await validateEmailAndCode(email, code);
       context.setToken(logged.jwt);
       return navigation.navigate('Home', {});
     } catch (err) {
       console.info('Error login: ', err);
-      return setShowError('E-Mail o código no válidos');
+      return setShowError(`${i18next.t('login.loginfail')}`);
     }
   }
 
   async function onSendCode() {
     try {
       if (email.trim() === '') {
-        return setShowError('Inserte su email para continuar');
+        return setShowError(`${i18next.t('login.emptyemail')}`);
       }
       await login(email);
       return setSendCode(!sendCode);
@@ -64,10 +69,10 @@ function LoginScreen() {
                 value={email}
                 onChange={setEmail}
                 keyboardType="email-address"
-                placeholder="algo@gmail.com"
+                placeholder={i18next.t('login.emailplaceholder')}
               />
               <Button
-                title="Enviar código"
+                title={i18next.t('login.sendcode')}
                 onPress={() => onSendCode()}
                 backgroundColor="#ffcc00"
                 textColor="#000000"
@@ -80,13 +85,13 @@ function LoginScreen() {
           { sendCode && (
             <>
               <Input
-                label="Inserte Código recibido"
+                label={i18next.t('login.insertcode')}
                 value={code}
                 onChange={setCode}
                 placeholder="FG778A"
               />
               <Button
-                title="Ingresar"
+                title={i18next.t('login.login')}
                 onPress={() => onLogin()}
                 backgroundColor="#ffcc00"
                 textColor="#000000"
@@ -101,7 +106,7 @@ function LoginScreen() {
             onPress={() => onSendCode()}
             linkLine
           >
-            Reenviar Código
+            {i18next.t('login.sendnewcode')}
           </Text>
         )}
       </View>
