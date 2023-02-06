@@ -5,6 +5,7 @@ import React, {
 
 import jwtDecode from 'jwt-decode';
 import NetInfo from '@react-native-community/netinfo';
+import { getLocales } from 'expo-localization';
 
 import { AuthProvider } from './AuthContext';
 
@@ -22,6 +23,7 @@ function AppProviderContext({ children }) {
     connected: false,
     connectedType: null,
   });
+  const [userLocales, setUserLocales] = useState();
 
   const [localData, setLocalData] = useState();
 
@@ -59,11 +61,25 @@ function AppProviderContext({ children }) {
     return { connected: false, connectedType: null };
   }
 
+  async function getUserLocales() {
+    try {
+      const currentLocales = getLocales();
+      await storeData(currentLocales, 'currentLocalesStoraged');
+      setUserLocales(currentLocales);
+      console.info(currentLocales);
+      return currentLocales;
+    } catch (err) {
+      console.error(`getUserLocales error: ${err}`, 'AuthProvider.js');
+      return null;
+    }
+  }
+
   async function getLocalToken() {
     try {
       await Promise.all([
         getStorageData(),
         getCurrentNetworkStatus(),
+        getUserLocales(),
       ]);
 
       const localToken = await getData(sessionLocalKey);
@@ -119,6 +135,7 @@ function AppProviderContext({ children }) {
         },
         logged,
         ...networkStatus,
+        ...userLocales,
         storeData,
         getStorageData,
         setToken: (value) => {

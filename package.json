@@ -24,7 +24,8 @@
     "react-native": "0.70.5",
     "react-native-indicators": "^0.17.0",
     "expo-image-picker": "~14.0.2",
-    "expo-local-authentication": "~13.0.2"
+    "expo-local-authentication": "~13.0.2",
+    "expo-localization": "~14.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
