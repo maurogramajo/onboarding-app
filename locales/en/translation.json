@@ -1,0 +1,10 @@
+{
+  "home": {
+    "title": "User's profile",
+    "name" : "Name",
+    "lastname" : "Last name"
+  },
+  "login": {
+    
+  }
+}

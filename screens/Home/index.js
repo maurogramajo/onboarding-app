@@ -9,6 +9,9 @@ import { View, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
+import { useTranslation } from 'react-i18next';
+import i18next from '../../utils/i18n';
+
 import AuthContext from '../../providers/AuthContext';
 import { getUserProfilePhoto } from '../../helpers/images';
 import { uploadFile } from '../../libs/api';
@@ -26,6 +29,8 @@ function HomeScreen({ route }) {
   const [loading, setLoading] = useState(false);
   const [userInfo, setUserInfo] = useState();
   const context = useContext(AuthContext);
+
+  const { t } = useTranslation();
 
   const {
     userData,
@@ -110,7 +115,7 @@ function HomeScreen({ route }) {
         <Text
           fontSize={30}
           bold
-        >Perfil de Usuario</Text>
+        >{i18next.t('home.title')}</Text>
         <View style={styles.pictureFrame}>
           <Image
             style={styles.profilePhoto}
@@ -125,12 +130,12 @@ function HomeScreen({ route }) {
         </View>
         <View style={styles.infoFrame}>
           <EditableText
-            label="Nombre"
+            label={i18next.t('home.name')}
             value={!(userInfo.firstName)? 'NoName' : userInfo.firstName}
             setValue={(v) => onChangeUserInfo('firstName', v, true)}
           />
           <EditableText
-            label="Apellido"
+            label={i18next.t('home.lastname')}
             value={!(userInfo.lastName)? 'NoLastName' : userInfo.lastName}
             setValue={(v) => onChangeUserInfo('lastName', v, true)}
           />

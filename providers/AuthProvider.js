@@ -5,7 +5,9 @@ import React, {
 
 import jwtDecode from 'jwt-decode';
 import NetInfo from '@react-native-community/netinfo';
-import { getLocales } from 'expo-localization';
+import { localization, getLocales } from 'expo-localization';
+
+import i18n from '../utils/i18n';
 
 import { AuthProvider } from './AuthContext';
 
@@ -66,8 +68,7 @@ function AppProviderContext({ children }) {
       const currentLocales = getLocales();
       await storeData(currentLocales, 'currentLocalesStoraged');
       setUserLocales(currentLocales);
-      console.info(currentLocales);
-      return currentLocales;
+      i18n.changeLanguage(currentLocales[0].languageCode);
     } catch (err) {
       console.error(`getUserLocales error: ${err}`, 'AuthProvider.js');
       return null;
@@ -80,7 +81,7 @@ function AppProviderContext({ children }) {
         getStorageData(),
         getCurrentNetworkStatus(),
         getUserLocales(),
-      ]);
+      ])
 
       const localToken = await getData(sessionLocalKey);
       if (localToken) {
