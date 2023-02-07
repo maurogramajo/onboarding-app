@@ -9,7 +9,6 @@ import { View, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
-import { useTranslation } from 'react-i18next';
 import i18next from '../../utils/i18n';
 
 import AuthContext from '../../providers/AuthContext';
@@ -30,21 +29,19 @@ function HomeScreen({ route }) {
   const [userInfo, setUserInfo] = useState();
   const context = useContext(AuthContext);
 
-  const { t } = useTranslation();
-
   const {
     userData,
     setUserData,
   } = context;
 
-  const _id = undefined;
-  // const { _id } = route.params;
+  const { _id } = route.params;
 
   async function fetchUserInfo() {
     try {
       setLoading(true);
-      if(!_id)
+      if(!_id) {
         setUserInfo(userData);
+      }
       else {
         const response = await getUserData(_id, true);
         setUserInfo(response);
@@ -104,7 +101,7 @@ function HomeScreen({ route }) {
   }
 
   useEffect(() => {
-    fetchUserInfo();
+    fetchUserInfo();  
   }, [_id]);
 
   if (!userInfo) return null;

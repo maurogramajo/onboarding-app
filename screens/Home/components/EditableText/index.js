@@ -17,6 +17,7 @@ function EditableText({
 }) {
   const [editable, setEditable] = useState(false);
   const [localValue, setLocalValue] = useState(value);
+  const [submitted, setSubmitted] = useState(false);
   const refInput = useRef(null);
 
   const handleEdit = () => {
@@ -25,13 +26,17 @@ function EditableText({
   }
 
   const handleUpdate = () => {
+    setSubmitted(true);
+    if(localValue !== value)
+      setValue(localValue);
     setEditable(false);
-    setValue(localValue);
   }
 
-  const handleLeftUpdate = () => {
-    setLocalValue(value);
+  const handleBlur = () => {
     setEditable(false);
+    if(!submitted)
+      setLocalValue(value);
+    setSubmitted(false);
   }
 
   return(
@@ -53,6 +58,7 @@ function EditableText({
           fontSize,
         }}
         onSubmitEditing={handleUpdate}
+        onBlur={handleBlur}
       />
       <Pressable
         onPress={!(editable) ? handleEdit : handleUpdate}

@@ -24,10 +24,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/fuego.png",
         "backgroundColor": "#0B1626"
-      }
+      },
+      "package": "com.maurogramajo.onboardingapp"
     },
     "web": {
       "favicon": "./assets/fuego.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ff28ee63-1585-4747-bc7f-4d934695e354"
+      }
     }
   }
 }

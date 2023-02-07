@@ -3,6 +3,7 @@ import {
   isEnrolledAsync,
   authenticateAsync 
 } from 'expo-local-authentication';
+
 const biometricsAuth = async () => {
   const compatible = await hasHardwareAsync();
   if (!compatible) throw 'This device is not compatible for biometric authentication';
@@ -14,4 +15,4 @@ const biometricsAuth = async () => {
   if (!result.success) throw `${result.error} - Authentication unsuccessful`;
   if (result.success) return true;
 }
-export default biometricsAuth
+export default biometricsAuth;

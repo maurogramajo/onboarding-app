@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { View } from 'react-native';
 
-import { useTranslation } from 'react-i18next';
 import i18next from '../../utils/i18n';
 
 import {
@@ -28,8 +27,6 @@ function LoginScreen() {
   const [sendCode, setSendCode] = useState(false);
   const [showError, setShowError] = useState('');
   const context = useContext(AuthContext);
-
-  const { t } = useTranslation();
 
   async function onLogin() {
     try {
