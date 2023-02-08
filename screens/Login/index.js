@@ -17,6 +17,7 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import Text from '../../components/Text';
 import Toast from '../../components/Toast';
+import LanguageSelector from '../../components/LanguageSelector';
 
 import styles from './styles';
 
@@ -35,6 +36,9 @@ function LoginScreen() {
       }
       const logged = await validateEmailAndCode(email, code);
       context.setToken(logged.jwt);
+      setSendCode(!sendCode);
+      setCode('');
+      setEmail('');
       return navigation.navigate('Home', {});
     } catch (err) {
       console.info('Error login: ', err);
@@ -57,6 +61,7 @@ function LoginScreen() {
 
   return (
     <View style={styles.container}>
+      <LanguageSelector />
       <View style={styles.formData}>
         <View style={styles.formDataFields}>
           { !sendCode && (

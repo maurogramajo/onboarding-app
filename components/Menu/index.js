@@ -3,7 +3,6 @@ import { useNavigation } from '@react-navigation/native';
 // Using the provided hook
 import { useActionSheet } from '@expo/react-native-action-sheet';
 
-import { useTranslation } from 'react-i18next';
 import i18next from '../../utils/i18n';
 
 import AuthContext from '../../providers/AuthContext';
@@ -14,8 +13,6 @@ export default function Menu() {
   const { showActionSheetWithOptions } = useActionSheet();
   const context = useContext(AuthContext);
   const navigation = useNavigation();
-
-  const { t } = useTranslation();
 
   const {
     logout,

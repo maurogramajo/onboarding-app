@@ -21,6 +21,7 @@ import {
 function AppProviderContext({ children }) {
   const [logged, setLogged] = useState(false);
   const [userData, setUserData] = useState();
+  const [languageCode, setLanguageCode] = useState();
   const [networkStatus, setNetworkStatus] = useState({
     connected: false,
     connectedType: null,
@@ -68,6 +69,7 @@ function AppProviderContext({ children }) {
       const currentLocales = getLocales();
       await storeData(currentLocales, 'currentLocalesStoraged');
       setUserLocales(currentLocales);
+      setLanguageCode(currentLocales[0].languageCode);
       i18n.changeLanguage(currentLocales[0].languageCode);
     } catch (err) {
       console.error(`getUserLocales error: ${err}`, 'AuthProvider.js');
@@ -134,6 +136,8 @@ function AppProviderContext({ children }) {
             storeData({ jwt }, sessionLocalKey);
           }
         },
+        languageCode,
+        setLanguageCode,
         logged,
         ...networkStatus,
         ...userLocales,

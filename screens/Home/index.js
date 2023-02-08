@@ -21,6 +21,7 @@ import Pressable from '../../components/Pressable';
 import Menu from '../../components/Menu';
 import Loading from '../../components/Loading';
 import EditableText from './components/EditableText';
+import LanguageSelector from '../../components/LanguageSelector';
 
 import styles from './styles';
 
@@ -116,6 +117,7 @@ function HomeScreen({ route }) {
 
   return (
     <View style={styles.container}>
+      <LanguageSelector />
       <View style={styles.userFrame}>
         <Text
           fontSize={30}

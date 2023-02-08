@@ -1,58 +1,84 @@
 import React, { useState, useEffect } from 'react';
 
 import * as SplashScreen from 'expo-splash-screen';
+
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
-import AppProviderContext from './providers/AuthProvider';
+// import checkUpdate from './helpers/update';
+
+import AuthProviderContext from './providers/AuthProvider';
 
 import { storeData } from './StorageData';
 
+import { View } from 'react-native';
 import Loading from './components/Loading';
-import Routes from './components/AppRoutes';
+import AppRoutes from './components/AppRoutes';
 
 SplashScreen.preventAutoHideAsync()
   .catch(console.warn); // it's good to explicitly catch and inspect any error
 
-export default function App() {
-  const [appIsReady, setAppIsReady] = useState(false);
+function App() {
+  const [init, setInit] = useState(false);
 
   useEffect(() => {
-    async function prepare() {
+    const initApp = async () => {
       try {
-        // Pre-load fonts, make any API calls you need to do here
         await storeData('init', 'initStatus');
-        // Artificially delay for two seconds to simulate a slow loading
-        // experience. Please remove this if you copy and paste the code!
-        // await new Promise(resolve => setTimeout(resolve, 1000));
-      } catch (e) {
-        console.warn(e);
-      } finally {
-        // Tell the application to render
-        setAppIsReady(true);
+        // await checkUpdate();
+        setInit(true);
         await SplashScreen.hideAsync();
+      } catch (err) {
+        console.info('Something went wrong: ', err);
       }
-    }
-    
-    prepare();
-  }, []);
+    };
+  
+    initApp();
+  }, []);  
 
-  if(!appIsReady) {
+  if (init) {
     return (
-      <Loading />
+      <AuthProviderContext>
+        <ShowApp />
+      </AuthProviderContext>
     );
   }
+  return (
+    <View
+      style={{
+        width: '100%',
+        width: '100%',
+        flex: 1,
+        backgroundColor: '#0B1626',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Loading />
+    </View>
+  );
+}
 
-  if (appIsReady) {
-    return (
-      <AppProviderContext>
-        <ActionSheetProvider>
-          <Routes />
-        </ActionSheetProvider>
-      </AppProviderContext>
-    );
+function ShowApp() {
+  const [initialized, setInitialized] = useState(false);
+
+  useEffect(() => {
+    if (!initialized) {
+      setInitialized(true);
+    }
+    return () => {
+      // clearInterval(id);
+    };
+  }, [initialized]);
+
+  if (!initialized) {
+    return (<Loading />);
   }
 
   return (
-    <Loading />
+    <ActionSheetProvider>
+      <AppRoutes />
+    </ActionSheetProvider>
   );
 }
+
+export default App;
