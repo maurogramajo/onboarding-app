@@ -101,10 +101,18 @@ function HomeScreen({ route }) {
   }
 
   useEffect(() => {
-    fetchUserInfo();  
-  }, [_id]);
+    if (userData) {
+      fetchUserInfo(userData);
+    } 
+  }, [_id, userData]);
 
-  if (!userInfo) return null;
+  if (!userInfo) {
+    return (
+    <View style={styles.container}>
+      <Loading />
+    </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

@@ -22,7 +22,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/fuego.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0B1626"
       },
       "package": "com.maurogramajo.onboardingapp"
