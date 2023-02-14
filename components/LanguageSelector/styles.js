@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     position: 'absolute',
-    top: 120,
+    top: 70,
     right: 25,
   }
 });

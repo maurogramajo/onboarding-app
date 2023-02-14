@@ -18,5 +18,11 @@
     "title": "Menu",
     "cancel": "Cancel",
     "logout": "Log out"
+  },
+  "authentication": {
+    "retrytitle": "Is that you?",
+    "retrymessage": "Authenticate to continue",
+    "failtitle": "Biometric authentication failed",
+    "failmessage": "It may not be activated or an error occurred."
   }
 }

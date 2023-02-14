@@ -4,7 +4,8 @@ import React, {
   useEffect,
 } from 'react';
 
-import { View, Image } from 'react-native';
+import { View, Image, BackHandler } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import * as ImagePicker from 'expo-image-picker';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
@@ -100,6 +101,21 @@ function HomeScreen({ route }) {
       setLoading(false);
     }
   }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        // your code here
+        return true; // return true to prevent going back
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => {
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      };
+    }, [])
+  );
 
   useEffect(() => {
     if (userData) {

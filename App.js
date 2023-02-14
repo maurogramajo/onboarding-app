@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import * as SplashScreen from 'expo-splash-screen';
+import 'react-native-gesture-handler';
 
+import * as SplashScreen from 'expo-splash-screen';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
-// import checkUpdate from './helpers/update';
+import checkUpdate from './helpers/update';
 
 import AuthProviderContext from './providers/AuthProvider';
 
@@ -24,7 +25,7 @@ function App() {
     const initApp = async () => {
       try {
         await storeData('init', 'initStatus');
-        // await checkUpdate();
+        //await checkUpdate();
         setInit(true);
         await SplashScreen.hideAsync();
       } catch (err) {

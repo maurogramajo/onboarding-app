@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "onboarding-app",
+    "name": "Mauro App",
     "slug": "onboarding-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon2.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash2.png",
@@ -28,7 +28,7 @@
       "package": "com.maurogramajo.onboardingapp"
     },
     "web": {
-      "favicon": "./assets/fuego.png"
+      "favicon": "./assets/icon2.png"
     },
     "extra": {
       "eas": {

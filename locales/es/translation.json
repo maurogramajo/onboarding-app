@@ -18,5 +18,11 @@
     "title": "Menú",
     "cancel": "Cancelar",
     "logout": "Cerrar Sesión"
+  },
+  "authentication": {
+    "retrytitle": "¿Eres tú?",
+    "retrymessage": "Realice autenticación para continuar",
+    "failtitle": "Falló la autenticación biométrica",
+    "failmessage": "Puede que no esté activada o se produjo un error."
   }
 }
