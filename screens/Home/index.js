@@ -139,10 +139,6 @@ function HomeScreen({ route }) {
           fontSize={30}
           bold
         >{i18next.t('home.title')}</Text>
-        <Text
-          fontSize={30}
-          bold
-        >HOLA MUNDO</Text>
         <View style={styles.pictureFrame}>
           <Image
             style={styles.profilePhoto}
